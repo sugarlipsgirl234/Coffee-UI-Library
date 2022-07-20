@@ -12,7 +12,7 @@ function module:handleProperties()
 	local ButtonArea = Instance.new("ScrollingFrame")
 
 	UILibrary.Name = "UILibrary"
-	UILibrary.Parent = game.CoreGui
+	UILibrary.Parent = game:GetService("CoreGui")
 	UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	UIElements.Name = "UIElements"
