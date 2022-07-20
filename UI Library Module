@@ -1,7 +1,5 @@
 local module = {}
 
-local playerGui = game.Players.LocalPlayer.PlayerGui
-
 function module:MakeWindow(text)
 	local UIElements = Instance.new("Folder")
 	local Players = game:GetService("Players")
