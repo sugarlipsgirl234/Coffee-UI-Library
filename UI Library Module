@@ -1,6 +1,9 @@
 local module = {}
 
-function module:MakeWindow(text)
+local playerGui = game.Players.LocalPlayer.PlayerGui
+
+function module:MakeWindow(text,ui)
+	local UILibrary = ui
 	local UIElements = Instance.new("Folder")
 	local Players = game:GetService("Players")
 	local BackgroundFrame = Instance.new("Frame")
@@ -60,7 +63,7 @@ end
 
 function module:MakeUI()
 
-	local Items = Instance.new("Folder")
+	local Items = Instance.new("ScreenGui")
 	local SliderObject2 = Instance.new("Frame")
 	local Slider2 = Instance.new("TextButton")
 	local Colorpicker = Instance.new("TextButton")
@@ -72,7 +75,7 @@ function module:MakeUI()
 	--Properties:
 
 	Items.Name = "Items"
-	Items.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	Items.Parent = game.CoreGui.UILibrary
 	Items.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	SliderObject2.Name = "SliderObject"
@@ -318,5 +321,7 @@ UserInputService.InputBegan:Connect(function(input, ty)
 		end 
 	end 
 end)
+
+module:MakeWindow("PLS WORK")
 
 return module
