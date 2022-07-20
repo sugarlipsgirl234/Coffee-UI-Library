@@ -3,7 +3,6 @@ local module = {}
 local playerGui = game.Players.LocalPlayer.PlayerGui
 
 function module:MakeWindow(text)
-	local UILibrary = Instance.new("ScreenGui")
 	local UIElements = Instance.new("Folder")
 	local Players = game:GetService("Players")
 	local BackgroundFrame = Instance.new("Frame")
@@ -216,7 +215,7 @@ function module:StartSliding(slider)
 	end)
 end
 
-function module:NewSlider(parent, properties)
+function module:MakeSlider(parent, properties)
 	if properties ~= nil then 
 		local newSlider = module.Slider:Clone()
 		module.ClonedSlider = newSlider
@@ -282,7 +281,6 @@ function module:MakeButton(parent, text)
 	local new = buttonObj:Clone()
 	buttonObj.Parent = parent 
 	buttonObj.Text = text
-	return buttonObj
 end 
 
 function module:MakeLabel(parent, text)
@@ -322,7 +320,5 @@ UserInputService.InputBegan:Connect(function(input, ty)
 		end 
 	end 
 end)
-
-module:MakeWindow("UI")
 
 return module
