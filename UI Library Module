@@ -48,7 +48,7 @@ function module:StopKeybind(keybind)
 	end
 end 
 
-function module:MakeDown(parent, size, array)
+function module:MakeDown(size, array)
 
 	local option = "Hello"
 
