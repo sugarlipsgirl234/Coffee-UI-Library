@@ -55,7 +55,7 @@ function module:MakeDown(parent, size, array)
 	local function label()	
 		local Scroll = Instance.new("ScrollingFrame")
 		Scroll.Name = "Dropdown"
-		Scroll.Parent = UIElements
+		Scroll.Parent = Main
 		Scroll.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
 		Scroll.BorderColor3 = Color3.fromRGB(65, 60, 56)
 		Scroll.BorderSizePixel = 0
@@ -67,11 +67,11 @@ function module:MakeDown(parent, size, array)
 
 		for _,v in pairs(array) do 
 			local TextButt = Instance.new("TextButton")
-			TextButt.Parent = parent
+			TextButt.Parent = Scroll
 			TextButt.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
 			TextButt.BorderColor3 = Color3.fromRGB(65, 60, 56)
 			TextButt.BorderSizePixel = 0
-			TextButt.Size = size
+			TextButt.Size = UDim2.new(0, 436, 0, 30)
 			TextButt.Font = Enum.Font.Legacy
 			TextButt.Text = v
 			TextButt.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -98,7 +98,7 @@ end
 function module:MakeBox(text, parent, size)
 	local function label()	
 		local Box = Instance.new("TextBox")
-		Box.Parent = parent
+		Box.Parent = Main
 		Box.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
 		Box.BorderColor3 = Color3.fromRGB(65, 60, 56)
 		Box.BorderSizePixel = 0
@@ -122,7 +122,7 @@ end
 function module:MakeButton(text, parent, size)
 	local function label()	
 		local TextButt = Instance.new("TextButton")
-		TextButt.Parent = parent
+		TextButt.Parent = Main
 		TextButt.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
 		TextButt.BorderColor3 = Color3.fromRGB(65, 60, 56)
 		TextButt.BorderSizePixel = 0
@@ -146,7 +146,7 @@ end
 function module:MakeLabel(text, parent, size)
 	local function label()	
 		local TextLabel2 = Instance.new("TextLabel")
-		TextLabel2.Parent = parent
+		TextLabel2.Parent = Main
 		TextLabel2.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
 		TextLabel2.BorderColor3 = Color3.fromRGB(65, 60, 56)
 		TextLabel2.BorderSizePixel = 0
