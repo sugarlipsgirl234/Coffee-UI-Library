@@ -1,5 +1,241 @@
 local module = {}
 
+module.Slider = script.SliderObject
+module.ActualSlider = module.Slider.Slider
+module.ClonedSlider = "hi"
+module.actualCloned = "bye"
+
+local UILibrary
+local UIElements
+local Main 
+local TextLabel 
+local TextButton 
+local ButtonArea
+
+local UserInputService = game:GetService("UserInputService")
+local Connection = {}
+Connection.__index = Connection
+
+function module:MakeKeybind(signal, input, hold, callback)
+	local foundUI = game.CoreGui:FindFirstChild("UILibrary")
+
+	local self = {
+		sig = signal,
+		func = callback,
+		key = input,
+		hol = hold, 
+	}
+	setmetatable(self, Connection)
+
+	UserInputService.InputBegan:Connect(function(inp, typing)
+		if hold then 
+			if UserInputService:IsKeyDown(input) then 
+			 	callback()
+			end 
+		end 
+	end)
+
+	return self
+end 
+
+function module:StopKeybind(keybind)
+	if self.signal then
+		self.signal.connections[self.func] = nil
+		self.sig = nil
+		self.key = nil 
+		self.hol = nil
+		self.func = nil
+	end
+end 
+
+function module:MakeDown(parent, size, array)
+
+	local option = "Hello"
+
+	local function label()	
+		local Scroll = Instance.new("ScrollingFrame")
+		Scroll.Name = "Dropdown"
+		Scroll.Parent = UIElements
+		Scroll.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
+		Scroll.BorderColor3 = Color3.fromRGB(65, 60, 56)
+		Scroll.BorderSizePixel = 0
+		Scroll.ClipsDescendants = false
+		Scroll.Position = UDim2.new(0.288118809, 0, 0.134433955, 0)
+		Scroll.Selectable = false
+		Scroll.Size = UDim2.new(0, 436, 0, 324)
+		Scroll.ScrollBarThickness = 9
+
+		for _,v in pairs(array) do 
+			local TextButt = Instance.new("TextButton")
+			TextButt.Parent = parent
+			TextButt.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
+			TextButt.BorderColor3 = Color3.fromRGB(65, 60, 56)
+			TextButt.BorderSizePixel = 0
+			TextButt.Size = size
+			TextButt.Font = Enum.Font.Legacy
+			TextButt.Text = v
+			TextButt.TextColor3 = Color3.fromRGB(255, 255, 255)
+			TextButt.TextScaled = true
+			TextButt.TextSize = 14.000
+			TextButt.TextWrapped = true
+
+			TextButton.MouseButton1Down:Connect(function()
+				option = TextButton.Text
+			end)
+		end
+	end 
+
+	if size then 
+		label()
+	else 
+		size = UDim2.new(0, 436, 0, 30)
+		label()
+	end 
+
+	return option
+end
+
+function module:MakeBox(text, parent, size)
+	local function label()	
+		local Box = Instance.new("TextBox")
+		Box.Parent = parent
+		Box.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
+		Box.BorderColor3 = Color3.fromRGB(65, 60, 56)
+		Box.BorderSizePixel = 0
+		Box.Size = size
+		Box.Font = Enum.Font.LuckiestGuy
+		Box.Text = text
+		Box.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Box.TextScaled = true
+		Box.TextSize = 14.000
+		Box.TextWrapped = true
+	end 
+
+	if size then 
+		label()
+	else 
+		size = UDim2.new(0, 436, 0, 30)
+		label()
+	end 
+end
+
+function module:MakeButton(text, parent, size)
+	local function label()	
+		local TextButt = Instance.new("TextButton")
+		TextButt.Parent = parent
+		TextButt.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
+		TextButt.BorderColor3 = Color3.fromRGB(65, 60, 56)
+		TextButt.BorderSizePixel = 0
+		TextButt.Size = size
+		TextButt.Font = Enum.Font.LuckiestGuy
+		TextButt.Text = text
+		TextButt.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextButt.TextScaled = true
+		TextButt.TextSize = 14.000
+		TextButt.TextWrapped = true
+	end 
+
+	if size then 
+		label()
+	else 
+		size = UDim2.new(0, 436, 0, 30)
+		label()
+	end 
+end
+
+function module:MakeLabel(text, parent, size)
+	local function label()	
+		local TextLabel2 = Instance.new("TextLabel")
+		TextLabel2.Parent = parent
+		TextLabel2.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
+		TextLabel2.BorderColor3 = Color3.fromRGB(65, 60, 56)
+		TextLabel2.BorderSizePixel = 0
+		TextLabel2.Size = size
+		TextLabel2.Font = Enum.Font.LuckiestGuy
+		TextLabel2.Text = text
+		TextLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TextLabel2.TextScaled = true
+		TextLabel2.TextSize = 14.000
+		TextLabel2.TextWrapped = true
+	end 
+	if size ~= nil then 
+		label()
+	else 
+		size = UDim2.new(0, 436, 0, 30)
+		label()
+	end 
+end
+
+function module:StartSliding(slider, input)
+	local max = module.ClonedSlider
+	local fire = Instance.new("BoolValue")
+	local bar = module.actualCloned
+	local player = game.Players.LocalPlayer
+	local mouse = player:GetMouse()
+	local uis = game:GetService("UserInputService")
+	local ap = Vector2.new(max.AbsolutePosition.X, max.AbsolutePosition.Y)
+	local as = Vector2.new(max.AbsoluteSize.X, max.AbsoluteSize.Y)
+	local x = mouse.X
+	local down = false --if MouseButton1 is down or not
+	
+	fire.Parent = bar
+
+	bar.MouseButton1Down:Connect(function()
+
+		bar:TweenSize(UDim2.new(0, (mouse.X - ap.X), 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5) --where ever we click, the bar's size changes to reach the position
+		fire.Value = true
+		down = true
+
+	end)
+
+	uis.InputEnded:Connect(function(input, gp)
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+			down = false
+			fire.Value = false
+
+		end
+
+	end)
+	
+	mouse.Move:Connect(function()
+
+		if down == true then --if true, then this represents the mouse being dragged
+
+			fire.Value = false 
+			fire.Value = true
+
+			if mouse.X < ap.X then --out of bounds (to the left)
+				bar:TweenSize(UDim2.new(0, 0, 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
+			elseif mouse.X > (ap.X + as.X) then --out of bounds (to the right)
+				bar:TweenSize(UDim2.new(0, as.X, 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
+			else --within bounds
+				bar:TweenSize(UDim2.new(0, (mouse.X - ap.X), 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
+			end
+		end
+	end)
+end
+
+function module:MakeSlider()
+	SliderObject.Name = "SliderObject"
+	SliderObject.Parent = Main
+	SliderObject.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+	SliderObject.BorderSizePixel = 0
+	SliderObject.Position = UDim2.new(0.148218066, 0, 0.200250819, 0)
+	SliderObject.Size = UDim2.new(0, 407, 0, 39)
+
+	Slider.Name = "Slider"
+	Slider.Parent = SliderObject
+	Slider.Active = false
+	Slider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Slider.BorderSizePixel = 0
+	Slider.Position = UDim2.new(-0.00128686428, 0, 0.0248048622, 0)
+	Slider.Selectable = false
+	Slider.Size = UDim2.new(0, 46, 0, 39)
+	Slider.Text = ""
+end
+
 function module:MakeWindow(title)
 	local ran, fail = pcall(function()
 		local UILibrary = Instance.new("ScreenGui")
@@ -7,12 +243,15 @@ function module:MakeWindow(title)
 		UILibrary.Name = "UILibrary"
 		UILibrary.Enabled = true
 
-		local UIElements = Instance.new("Folder")
-		local BackgroundFrame = Instance.new("Frame")
-		local Main = Instance.new("ScrollingFrame")
+		UIElements = Instance.new("Folder")
+		BackgroundFrame = Instance.new("Frame")
+		Main = Instance.new("ScrollingFrame")
 
-		local TextLabel = Instance.new("TextLabel")
-		local ButtonArea = Instance.new("ScrollingFrame")
+		TextLabel = Instance.new("TextLabel")
+		ButtonArea = Instance.new("ScrollingFrame")
+
+		local uiLayout = Instance.new("UIListLayout")
+		local uiLayout2 = Instance.new("UIListLayout")
 
 		UIElements.Name = "UIElements"
 		UIElements.Parent = UILibrary
@@ -38,7 +277,13 @@ function module:MakeWindow(title)
 		Main.Size = UDim2.new(0, 436, 0, 324)
 		Main.ScrollBarThickness = 9
 
-		TextLabel.Parent = Main
+		uiLayout.Parent = Main 
+
+		local antiUI = Instance.new("Folder")
+		antiUI.Parent = Main 
+		antiUI.Name = "AntiUI"
+
+		TextLabel.Parent = antiUI
 		TextLabel.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
 		TextLabel.BorderColor3 = Color3.fromRGB(65, 60, 56)
 		TextLabel.BorderSizePixel = 0
@@ -62,6 +307,8 @@ function module:MakeWindow(title)
 		ButtonArea.Selectable = false
 		ButtonArea.Size = UDim2.new(0, 109, 0, 323)
 		ButtonArea.ScrollBarThickness = 6	
+
+		uiLayout2.Parent = ButtonArea
 	end)
 
 	if ran then
