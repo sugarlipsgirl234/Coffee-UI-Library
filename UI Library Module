@@ -1,11 +1,5 @@
 local module = {}
 
-local currentUI = game.CoreGui:FindFirstChild("UILibrary")
-
-if currentUI then 
-	currentUI:Destroy()
-end 
-
 function module:MakeWindow(title)
 	local ran, fail = pcall(function()
 		local UILibrary = Instance.new("ScreenGui")
