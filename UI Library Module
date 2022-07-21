@@ -10,7 +10,7 @@ function module:MakeWindow()
 	local UILibrary = Instance.new("ScreenGui")
 	UILibrary.Parent = game:GetService("CoreGui")
 	UILibrary.Name = "UILibrary"
-	local UIElements = UILibrary.UIElements
+	local UIElements = Instance.new("Folder")
 	local Players = game:GetService("Players")
 	local BackgroundFrame = Instance.new("Frame")
 	local Main = Instance.new("ScrollingFrame")
