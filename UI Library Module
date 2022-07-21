@@ -1,22 +1,16 @@
 local module = {}
 
-module.Slider = script.SliderObject
-module.ActualSlider = module.Slider.Slider
-module.ClonedSlider = "hi"
-module.actualCloned = "bye"
-
-local UILibrary
-local UIElements
-local Main 
-local TextLabel 
-local TextButton 
-local ButtonArea
-
 local UserInputService = game:GetService("UserInputService")
 local Connection = {}
 Connection.__index = Connection
 
 function module:MakeWindow(title)
+	local UILibrary
+	local UIElements
+	local Main 
+	local TextLabel 
+	local TextButton 
+	local ButtonArea
 	local ran, fail = pcall(function()
 		UILibrary = Instance.new("ScreenGui")
 		UILibrary.Parent = game:GetService("CoreGui")
@@ -299,7 +293,13 @@ function module:StartSliding(slider, input)
 	end)
 end
 
+module.Slider = game.CoreGui.UILibrary.UIElements.Main.SliderObject
+module.ActualSlider = module.Slider.Slider
+module.ClonedSlider = "hi"
+module.actualCloned = "bye"
+
 function module:MakeSlider()
+    local SliderObject = Instance.new("Frame")
 	SliderObject.Name = "SliderObject"
 	SliderObject.Parent = Main
 	SliderObject.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
@@ -307,6 +307,7 @@ function module:MakeSlider()
 	SliderObject.Position = UDim2.new(0.148218066, 0, 0.200250819, 0)
 	SliderObject.Size = UDim2.new(0, 407, 0, 39)
 
+    local Slider = Instance.new("TExtButton")
 	Slider.Name = "Slider"
 	Slider.Parent = SliderObject
 	Slider.Active = false
