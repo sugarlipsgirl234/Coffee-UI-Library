@@ -6,12 +6,10 @@ if currentUI then
 	currentUI:Destroy()
 end 
 
-local UILib = Instance.new("ScreenGui")
-UILib.Parent = game:GetService("CoreGui")
-UILib.Name = "UILibrary"
-
 function module:MakeWindow()
-	local UILibrary = UILib
+	local UILibrary = Instance.new("ScreenGui")
+	UILibrary.Parent = game:GetService("CoreGui")
+	UILibrary.Name = "UILibrary"
 	local UIElements = UILibrary.UIElements
 	local Players = game:GetService("Players")
 	local BackgroundFrame = Instance.new("Frame")
