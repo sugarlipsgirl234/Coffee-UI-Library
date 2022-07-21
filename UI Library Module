@@ -20,10 +20,6 @@ function module:MakeWindow()
 	local TextLabel = Instance.new("TextLabel")
 	local ButtonArea = Instance.new("ScrollingFrame")
 
-	UILibrary.Name = "UILibrary"
-	UILibrary.Parent = game.CoreGui
-	UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
 	UIElements.Name = "UIElements"
 	UIElements.Parent = UILibrary
 
