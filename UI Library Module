@@ -11,8 +11,9 @@ function module:MakeWindow(title)
 		local UILibrary = Instance.new("ScreenGui")
 		UILibrary.Parent = game:GetService("CoreGui")
 		UILibrary.Name = "UILibrary"
+		UILibrary.Enabled = true
+
 		local UIElements = Instance.new("Folder")
-		local Players = game:GetService("Players")
 		local BackgroundFrame = Instance.new("Frame")
 		local Main = Instance.new("ScrollingFrame")
 
@@ -23,6 +24,7 @@ function module:MakeWindow(title)
 		UIElements.Parent = UILibrary
 
 		BackgroundFrame.Name = "BackgroundFrame"
+		BackgroundFrame.Visible = true 
 		BackgroundFrame.Parent = UIElements
 		BackgroundFrame.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
 		BackgroundFrame.BorderSizePixel = 0
@@ -32,6 +34,7 @@ function module:MakeWindow(title)
 
 		Main.Name = "Main"
 		Main.Parent = UIElements
+		Main.Visible = true
 		Main.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
 		Main.BorderColor3 = Color3.fromRGB(65, 60, 56)
 		Main.BorderSizePixel = 0
@@ -48,6 +51,7 @@ function module:MakeWindow(title)
 		TextLabel.Size = UDim2.new(0, 436, 0, 30)
 		TextLabel.Font = Enum.Font.LuckiestGuy
 		TextLabel.Text = title
+		TextLabel.Visible = true
 		TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 		TextLabel.TextScaled = true
 		TextLabel.TextSize = 14.000
@@ -55,6 +59,7 @@ function module:MakeWindow(title)
 
 		ButtonArea.Name = "ButtonArea"
 		ButtonArea.Parent = UIElements
+		ButtonArea.Visible = true
 		ButtonArea.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
 		ButtonArea.BorderColor3 = Color3.fromRGB(65, 60, 56)
 		ButtonArea.BorderSizePixel = 0
