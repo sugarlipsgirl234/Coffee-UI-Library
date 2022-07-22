@@ -10,7 +10,7 @@ module.ClonedSlider = "hi"
 module.actualCloned = "bye"
 
 
-function module:NewSlider(parent, properties)
+module.MakeSlider = function(parent, properties)
 	if properties ~= nil then 
 		local newSlider = module.Slider:Clone()
 		module.ClonedSlider = newSlider
@@ -31,12 +31,7 @@ end
 local old = UDim2.new(-0.001+1, 0, -0.001+1, 0) 
 local new = UDim2.new(0.915, 0, -0.001, 0)
 
-local Players = game:GetService("Players")
-local plr = Players.LocalPlayer
-local UserInputService = game:GetService("UserInputService")
-local dragStart
-
-function module:StartSliding(slider, input)
+module.StartSliding = function(slider, input)
 	local max = module.ClonedSlider
 	local fire = Instance.new("BoolValue"); fire.Parent = max
 	local bar = module.actualCloned
@@ -94,7 +89,7 @@ Folder = Instance.new("Folder")
 ButtonArea = Instance.new("ScrollingFrame")
 UIListLayout = Instance.new("UIListLayout")
 
-function module:MakeWindow(text)
+module.MakeWindow = function(text)
 
 	UILibrary.Name = "UILibrary"
 	UILibrary.Parent = game:GetService("CoreGui")
@@ -156,7 +151,7 @@ function module:MakeWindow(text)
 
 end
 
-function module:MakeBox(text)
+module.MakeBox = function(text)
 	local TextBox = Instance.new("TextBox")
 	TextBox.Parent = UIElements
 	TextBox.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
@@ -169,7 +164,7 @@ function module:MakeBox(text)
 	TextBox.TextWrapped = true
 end 
 
-function module:MakeLabel(text)
+module.MakeLabel = function(text)
 	local TextButton = Instance.new("TextLabel")
 
 	TextButton.Name = "TextButton"
@@ -186,7 +181,7 @@ function module:MakeLabel(text)
 	TextButton.TextWrapped = true
 end
 
-function module:MakeButton(text)
+module.MakeButton = function(text)
 	local TextButton_2 = Instance.new("TextButton")
 
 	TextButton_2.Parent = UIElements
@@ -199,7 +194,5 @@ function module:MakeButton(text)
 	TextButton_2.TextSize = 14.000
 	TextButton_2.TextWrapped = true
 end
-
-module:MakeWindow(tostring(game.PlaceId).. " GUI")
 
 return module
