@@ -104,7 +104,7 @@ function module:MakeWindow(text)
 	Folder = Instance.new("Folder")
 
 	UILibrary.Name = "UILibrary"
-	UILibrary.Parent = module.CoreGui
+	UILibrary.Parent = game:GetService("CoreGui")
 	UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	UIElements.Name = "UIElements"
