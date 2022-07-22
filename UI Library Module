@@ -1,202 +1,210 @@
 local module = {}
 
+module.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+module.GUI = module.Parent.UILibrary
+module.Elements = module.GUI.UIElements
+
+module.Permissions = false 
+
+if module.Permissions then 
+	module.Parent = game:GetService("CoreGui")
+else 
+	module.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+end
+
+UILibrary = Instance.new("ScreenGui")
+
+UILibrary.Name = "UILibrary"
+UILibrary.Parent = module.Parent
+UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+UIElements = Instance.new("Folder")
+BackgroundFrame = Instance.new("Frame")
+Main = Instance.new("ScrollingFrame")
+UIGridLayout = Instance.new("UIGridLayout")
+Folder = Instance.new("Folder")
+ButtonArea = Instance.new("ScrollingFrame")
+UIListLayout = Instance.new("UIListLayout")
+
 local good, bad = pcall(function()
 
-    module.Parent = game:GetService("Players").LocalPlayer.PlayerGui
-    module.GUI = module.CoreGui.UILibrary
-    module.Elements = module.GUI.UIElements
-
-    module.Slider = module.Elements.SliderObject
-    module.ActualSlider = module.Slider.Slider
-    module.ClonedSlider = "hi"
-    module.actualCloned = "bye"
+	module.Slider = module.Elements.SliderObject
+	module.ActualSlider = module.Slider.Slider
+	module.ClonedSlider = "hi"
+	module.actualCloned = "bye"
 
 
-    module.MakeSlider = function(parent, properties)
-        if properties ~= nil then 
-            local newSlider = module.Slider:Clone()
-            module.ClonedSlider = newSlider
-            module.actualCloned = module.ClonedSlider.Slider
-            for i,v in pairs(properties) do 
-                newSlider[properties[1]] = properties[2]
-            end
-            return newSlider.Slider
-        elseif properties == nil then
-            local newSlider = module.Slider:Clone()
-            newSlider.Parent = parent
-            module.ClonedSlider = newSlider
-            module.actualCloned = module.ClonedSlider.Slider		
-            return newSlider.Slider
-        end 
-    end
+	module.MakeSlider = function(parent, properties)
+		if properties ~= nil then 
+			local newSlider = module.Slider:Clone()
+			module.ClonedSlider = newSlider
+			module.actualCloned = module.ClonedSlider.Slider
+			for i,v in pairs(properties) do 
+				newSlider[properties[1]] = properties[2]
+			end
+			return newSlider.Slider
+		elseif properties == nil then
+			local newSlider = module.Slider:Clone()
+			newSlider.Parent = parent
+			module.ClonedSlider = newSlider
+			module.actualCloned = module.ClonedSlider.Slider		
+			return newSlider.Slider
+		end 
+	end
 
-    local old = UDim2.new(-0.001+1, 0, -0.001+1, 0) 
-    local new = UDim2.new(0.915, 0, -0.001, 0)
+	local old = UDim2.new(-0.001+1, 0, -0.001+1, 0) 
+	local new = UDim2.new(0.915, 0, -0.001, 0)
 
-    module.StartSliding = function(slider, input)
-        local max = module.ClonedSlider
-        local fire = Instance.new("BoolValue"); fire.Parent = max
-        local bar = module.actualCloned
-        local player = game.Players.LocalPlayer
-        local mouse = player:GetMouse()
-        local uis = game:GetService("UserInputService")
-        local ap = Vector2.new(max.AbsolutePosition.X, max.AbsolutePosition.Y)
-        local as = Vector2.new(max.AbsoluteSize.X, max.AbsoluteSize.Y)
-        local x = mouse.X
-        local down = false --if MouseButton1 is down or not
+	module.StartSliding = function(slider, input)
+		local max = module.ClonedSlider
+		local fire = Instance.new("BoolValue"); fire.Parent = max
+		local bar = module.actualCloned
+		local player = game.Players.LocalPlayer
+		local mouse = player:GetMouse()
+		local uis = game:GetService("UserInputService")
+		local ap = Vector2.new(max.AbsolutePosition.X, max.AbsolutePosition.Y)
+		local as = Vector2.new(max.AbsoluteSize.X, max.AbsoluteSize.Y)
+		local x = mouse.X
+		local down = false --if MouseButton1 is down or not
 
-        bar.MouseButton1Down:Connect(function()
+		bar.MouseButton1Down:Connect(function()
 
-            bar:TweenSize(UDim2.new(0, (mouse.X - ap.X), 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5) --where ever we click, the bar's size changes to reach the position
-            fire.Value = true
-            down = true
+			bar:TweenSize(UDim2.new(0, (mouse.X - ap.X), 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5) --where ever we click, the bar's size changes to reach the position
+			fire.Value = true
+			down = true
 
-        end)
+		end)
 
-        uis.InputEnded:Connect(function(input, gp)
+		uis.InputEnded:Connect(function(input, gp)
 
-            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
 
-                down = false
-                fire.Value = false
+				down = false
+				fire.Value = false
 
-            end
+			end
 
-        end)
+		end)
 
-        mouse.Move:Connect(function()
+		mouse.Move:Connect(function()
 
-            if down == true then --if true, then this represents the mouse being dragged
+			if down == true then --if true, then this represents the mouse being dragged
 
-                fire.Value = false 
-                fire.Value = true
+				fire.Value = false 
+				fire.Value = true
 
-                if mouse.X < ap.X then --out of bounds (to the left)
-                    bar:TweenSize(UDim2.new(0, 0, 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
-                elseif mouse.X > (ap.X + as.X) then --out of bounds (to the right)
-                    bar:TweenSize(UDim2.new(0, as.X, 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
-                else --within bounds
-                    bar:TweenSize(UDim2.new(0, (mouse.X - ap.X), 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
-                end
-            end
-        end)
-    end
+				if mouse.X < ap.X then --out of bounds (to the left)
+					bar:TweenSize(UDim2.new(0, 0, 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
+				elseif mouse.X > (ap.X + as.X) then --out of bounds (to the right)
+					bar:TweenSize(UDim2.new(0, as.X, 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
+				else --within bounds
+					bar:TweenSize(UDim2.new(0, (mouse.X - ap.X), 1, 0),Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5)
+				end
+			end
+		end)
+	end
 
-    UILibrary = Instance.new("ScreenGui")
+	module.MakeWindow = function(text)
 
-    UILibrary.Name = "UILibrary"
-    UILibrary.Parent = module.Parent
-    UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+		UIElements.Name = "UIElements"
+		UIElements.Parent = UILibrary
 
-    UIElements = Instance.new("Folder")
-    BackgroundFrame = Instance.new("Frame")
-    Main = Instance.new("ScrollingFrame")
-    UIGridLayout = Instance.new("UIGridLayout")
-    Folder = Instance.new("Folder")
-    ButtonArea = Instance.new("ScrollingFrame")
-    UIListLayout = Instance.new("UIListLayout")
+		BackgroundFrame.Name = "BackgroundFrame"
+		BackgroundFrame.Parent = UIElements
+		BackgroundFrame.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
+		BackgroundFrame.BorderSizePixel = 0
+		BackgroundFrame.Position = UDim2.new(0.326732665, 0, 0.186320752, 0)
+		BackgroundFrame.Size = UDim2.new(0, 411, 0, 318)
+		BackgroundFrame.ZIndex = -100
 
-    module.MakeWindow = function(text)
+		Main.Name = "Main"
+		Main.Parent = UIElements
+		Main.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
+		Main.BorderColor3 = Color3.fromRGB(65, 60, 56)
+		Main.BorderSizePixel = 0
+		Main.ClipsDescendants = false
+		Main.Position = UDim2.new(0.288118809, 0, 0.134433955, 0)
+		Main.Selectable = false
+		Main.Size = UDim2.new(0, 436, 0, 324)
+		Main.ScrollBarThickness = 9
 
-        UIElements.Name = "UIElements"
-        UIElements.Parent = UILibrary
+		UIGridLayout.Parent = Main
+		UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
-        BackgroundFrame.Name = "BackgroundFrame"
-        BackgroundFrame.Parent = UIElements
-        BackgroundFrame.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
-        BackgroundFrame.BorderSizePixel = 0
-        BackgroundFrame.Position = UDim2.new(0.326732665, 0, 0.186320752, 0)
-        BackgroundFrame.Size = UDim2.new(0, 411, 0, 318)
-        BackgroundFrame.ZIndex = -100
+		Folder.Parent = Main
 
-        Main.Name = "Main"
-        Main.Parent = UIElements
-        Main.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
-        Main.BorderColor3 = Color3.fromRGB(65, 60, 56)
-        Main.BorderSizePixel = 0
-        Main.ClipsDescendants = false
-        Main.Position = UDim2.new(0.288118809, 0, 0.134433955, 0)
-        Main.Selectable = false
-        Main.Size = UDim2.new(0, 436, 0, 324)
-        Main.ScrollBarThickness = 9
+		ButtonArea = Instance.new("ScrollingFrame")
+		UIListLayout = Instance.new("UIListLayout")
 
-        UIGridLayout.Parent = Main
-        UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+		ButtonArea.Name = "ButtonArea"
+		ButtonArea.Parent = UIElements
+		ButtonArea.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
+		ButtonArea.BorderColor3 = Color3.fromRGB(65, 60, 56)
+		ButtonArea.BorderSizePixel = 0
+		ButtonArea.ClipsDescendants = false
+		ButtonArea.Position = UDim2.new(0.168316841, 0, 0.136792451, 0)
+		ButtonArea.Selectable = false
+		ButtonArea.Size = UDim2.new(0, 109, 0, 323)
+		ButtonArea.ScrollBarThickness = 6
 
-        Folder.Parent = Main
+		local TextLabel = Instance.new("TextLabel")
+		TextLabel.Parent = Folder
+		TextLabel.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
+		TextLabel.BorderColor3 = Color3.fromRGB(65, 60, 56)
+		TextLabel.BorderSizePixel = 0
+		TextLabel.Size = UDim2.new(0, 436, 0, 30)
+		TextLabel.Font = Enum.Font.LuckiestGuy
+		TextLabel.Text = text
+		TextLabel.TextColor3 = Color3.fromRGB(65, 60, 56)
+		TextLabel.TextScaled = true
+		TextLabel.TextSize = 14.000
+		TextLabel.TextWrapped = true
 
-        ButtonArea = Instance.new("ScrollingFrame")
-        UIListLayout = Instance.new("UIListLayout")
+	end
 
-        ButtonArea.Name = "ButtonArea"
-        ButtonArea.Parent = UIElements
-        ButtonArea.BackgroundColor3 = Color3.fromRGB(210, 180, 140)
-        ButtonArea.BorderColor3 = Color3.fromRGB(65, 60, 56)
-        ButtonArea.BorderSizePixel = 0
-        ButtonArea.ClipsDescendants = false
-        ButtonArea.Position = UDim2.new(0.168316841, 0, 0.136792451, 0)
-        ButtonArea.Selectable = false
-        ButtonArea.Size = UDim2.new(0, 109, 0, 323)
-        ButtonArea.ScrollBarThickness = 6
+	module.MakeBox = function(text)
+		local TextBox = Instance.new("TextBox")
+		TextBox.Parent = UIElements
+		TextBox.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
+		TextBox.Position = UDim2.new(0.400990099, 0, 0.400362313, 0)
+		TextBox.Size = UDim2.new(0, 200, 0, 50)
+		TextBox.Text = text
+		TextBox.TextColor3 = Color3.fromRGB(162, 129, 90)
+		TextBox.TextScaled = true
+		TextBox.TextSize = 14.000
+		TextBox.TextWrapped = true
+	end 
 
-        local TextLabel = Instance.new("TextLabel")
-        TextLabel.Parent = Folder
-        TextLabel.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
-        TextLabel.BorderColor3 = Color3.fromRGB(65, 60, 56)
-        TextLabel.BorderSizePixel = 0
-        TextLabel.Size = UDim2.new(0, 436, 0, 30)
-        TextLabel.Font = Enum.Font.LuckiestGuy
-        TextLabel.Text = text
-        TextLabel.TextColor3 = Color3.fromRGB(65, 60, 56)
-        TextLabel.TextScaled = true
-        TextLabel.TextSize = 14.000
-        TextLabel.TextWrapped = true
+	module.MakeLabel = function(text)
+		local TextButton = Instance.new("TextLabel")
 
-    end
+		TextButton.Name = "TextButton"
+		TextButton.Parent = UIElements
+		TextButton.Active = true
+		TextButton.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
+		TextButton.Position = UDim2.new(0.400990099, 0, 0.400362313, 0)
+		TextButton.Selectable = true
+		TextButton.Size = UDim2.new(0, 200, 0, 50)
+		TextButton.Text = "Hello!"
+		TextButton.TextColor3 = Color3.fromRGB(162, 129, 90)
+		TextButton.TextScaled = true
+		TextButton.TextSize = 14.000
+		TextButton.TextWrapped = true
+	end
 
-    module.MakeBox = function(text)
-        local TextBox = Instance.new("TextBox")
-        TextBox.Parent = UIElements
-        TextBox.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
-        TextBox.Position = UDim2.new(0.400990099, 0, 0.400362313, 0)
-        TextBox.Size = UDim2.new(0, 200, 0, 50)
-        TextBox.Text = text
-        TextBox.TextColor3 = Color3.fromRGB(162, 129, 90)
-        TextBox.TextScaled = true
-        TextBox.TextSize = 14.000
-        TextBox.TextWrapped = true
-    end 
+	module.MakeButton = function(text)
+		local TextButton_2 = Instance.new("TextButton")
 
-    module.MakeLabel = function(text)
-        local TextButton = Instance.new("TextLabel")
-
-        TextButton.Name = "TextButton"
-        TextButton.Parent = UIElements
-        TextButton.Active = true
-        TextButton.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
-        TextButton.Position = UDim2.new(0.400990099, 0, 0.400362313, 0)
-        TextButton.Selectable = true
-        TextButton.Size = UDim2.new(0, 200, 0, 50)
-        TextButton.Text = "Hello!"
-        TextButton.TextColor3 = Color3.fromRGB(162, 129, 90)
-        TextButton.TextScaled = true
-        TextButton.TextSize = 14.000
-        TextButton.TextWrapped = true
-    end
-
-    module.MakeButton = function(text)
-        local TextButton_2 = Instance.new("TextButton")
-
-        TextButton_2.Parent = UIElements
-        TextButton_2.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
-        TextButton_2.Position = UDim2.new(0.400990099, 0, 0.400362313, 0)
-        TextButton_2.Size = UDim2.new(0, 200, 0, 50)
-        TextButton_2.Text = "Hello!"
-        TextButton_2.TextColor3 = Color3.fromRGB(162, 129, 90)
-        TextButton_2.TextScaled = true
-        TextButton_2.TextSize = 14.000
-        TextButton_2.TextWrapped = true
-    end
+		TextButton_2.Parent = UIElements
+		TextButton_2.BackgroundColor3 = Color3.fromRGB(65, 60, 56)
+		TextButton_2.Position = UDim2.new(0.400990099, 0, 0.400362313, 0)
+		TextButton_2.Size = UDim2.new(0, 200, 0, 50)
+		TextButton_2.Text = "Hello!"
+		TextButton_2.TextColor3 = Color3.fromRGB(162, 129, 90)
+		TextButton_2.TextScaled = true
+		TextButton_2.TextSize = 14.000
+		TextButton_2.TextWrapped = true
+	end
 
 end)
 
