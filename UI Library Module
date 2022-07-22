@@ -38,7 +38,7 @@ local dragStart
 
 function module:StartSliding(slider, input)
 	local max = module.ClonedSlider
-	local fire = max.Slider.Fire
+	local fire = Instance.new("BoolValue"); fire.Parent = max
 	local bar = module.actualCloned
 	local player = game.Players.LocalPlayer
 	local mouse = player:GetMouse()
@@ -85,14 +85,16 @@ function module:StartSliding(slider, input)
 	end)
 end
 
-function module:MakeWindow(text)
+UILibrary = Instance.new("ScreenGui")
+UIElements = Instance.new("Folder")
+BackgroundFrame = Instance.new("Frame")
+Main = Instance.new("ScrollingFrame")
+UIGridLayout = Instance.new("UIGridLayout")
+Folder = Instance.new("Folder")
+ButtonArea = Instance.new("ScrollingFrame")
+UIListLayout = Instance.new("UIListLayout")
 
-	UILibrary = Instance.new("ScreenGui")
-	UIElements = Instance.new("Folder")
-	BackgroundFrame = Instance.new("Frame")
-	Main = Instance.new("ScrollingFrame")
-	UIGridLayout = Instance.new("UIGridLayout")
-	Folder = Instance.new("Folder")
+function module:MakeWindow(text)
 
 	UILibrary.Name = "UILibrary"
 	UILibrary.Parent = game:GetService("CoreGui")
@@ -200,5 +202,7 @@ function module:MakeButton(text)
 	TextButton_2.TextSize = 14.000
 	TextButton_2.TextWrapped = true
 end
+
+module:MakeWindow(game.PlaceId.. " GUI")
 
 return module
