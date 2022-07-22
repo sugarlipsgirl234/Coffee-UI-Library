@@ -2,7 +2,7 @@ local module = {}
 
 local good, bad = pcall(function()
 
-    module.CoreGui = game:GetService("CoreGui")
+    module.Parent = game:GetService("Players").LocalPlayer.PlayerGui
     module.GUI = module.CoreGui.UILibrary
     module.Elements = module.GUI.UIElements
 
@@ -85,7 +85,7 @@ local good, bad = pcall(function()
     UILibrary = Instance.new("ScreenGui")
 
     UILibrary.Name = "UILibrary"
-    UILibrary.Parent = game:GetService("CoreGui")
+    UILibrary.Parent = module.Parent
     UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
     UIElements = Instance.new("Folder")
