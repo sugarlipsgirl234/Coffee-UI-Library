@@ -85,14 +85,14 @@ function module:StartSliding(slider, input)
 	end)
 end
 
-local UILibrary
-local UIElements
-local BackgroundFrame
-local Main
-local UIGridLayout
-local Folder 
-local ButtonArea 
-local UIListLayout
+local UILibrary = ''
+local UIElements = ''
+local BackgroundFrame = ''
+local Main = ''
+local UIGridLayout = ''
+local Folder = ''
+local ButtonArea = '' 
+local UIListLayout = ''
 
 function module:MakeWindow(text)
 
