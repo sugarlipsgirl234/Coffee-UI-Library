@@ -141,9 +141,6 @@ function module:MakeWindow(text)
 	ButtonArea.Size = UDim2.new(0, 109, 0, 323)
 	ButtonArea.ScrollBarThickness = 6
 
-	UIListLayout.Parent = ButtonArea
-	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-
 	local TextLabel = Instance.new("TextLabel")
 	TextLabel.Parent = Folder
 	TextLabel.BackgroundColor3 = Color3.fromRGB(162, 129, 90)
