@@ -203,6 +203,6 @@ function module:MakeButton(text)
 	TextButton_2.TextWrapped = true
 end
 
-module:MakeWindow(game.PlaceId.. " GUI")
+module:MakeWindow(tostring(game.PlaceId).. " GUI")
 
 return module
