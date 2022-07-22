@@ -83,6 +83,11 @@ local good, bad = pcall(function()
     end
 
     UILibrary = Instance.new("ScreenGui")
+
+    UILibrary.Name = "UILibrary"
+    UILibrary.Parent = game:GetService("CoreGui")
+    UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
     UIElements = Instance.new("Folder")
     BackgroundFrame = Instance.new("Frame")
     Main = Instance.new("ScrollingFrame")
@@ -92,10 +97,6 @@ local good, bad = pcall(function()
     UIListLayout = Instance.new("UIListLayout")
 
     module.MakeWindow = function(text)
-
-        UILibrary.Name = "UILibrary"
-        UILibrary.Parent = game:GetService("CoreGui")
-        UILibrary.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
         UIElements.Name = "UIElements"
         UIElements.Parent = UILibrary
